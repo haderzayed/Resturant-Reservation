@@ -1,0 +1,14 @@
+
+.btn-create
+{
+    border-radius: 0.5rem;
+    width: max-content;
+    height: max-content;
+    padding: 10px;
+    background-color: rgb(99 102 241);
+    color: rgb(255 255 255 );
+
+}
+
+.btn-create:hover {background-color: rgb(62, 63, 158);}
+ 
