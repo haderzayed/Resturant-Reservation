@@ -15,9 +15,14 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categories=Category::all();
+
+        if(isset($request->name)){
+            $categories=Category::where('name','LIKE', "%$request->name%")->latest()->paginate(10);
+        }else{
+            $categories=Category::latest()->paginate(10);
+        }
 
         return view('admin.category.index',compact('categories'));
     }
@@ -107,6 +112,7 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         Storage::delete($category->image);
+        $category->menues()->detach();
         $category->delete();
         toastr()->success('Category deleted Sucessfully');
         return redirect()->route('admin.categories.index');

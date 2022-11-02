@@ -16,10 +16,20 @@ class MenueController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $menues=Menue::all();
-         return view('admin.menue.index',compact('menues'));
+        $categories_ids=$request->category_ids;
+        if(isset($request->name) || isset($request->price) || isset($request->category_ids) ){
+            $menues=Menue::where('name','LIKE', "%$request->name%")
+                           ->where ('price','LIKE', "%$request->price%")
+                           ->orWhereHas('categories', function ($query) use ($categories_ids) {
+                            $query->whereIn('category_id', [$categories_ids]);
+                        })->latest()->paginate(10);
+        }else{
+            $menues=Menue::latest()->paginate(10);
+        }
+        $categories=Category::pluck('name','id');
+         return view('admin.menue.index',compact('menues','categories'));
     }
 
     /**
@@ -28,7 +38,7 @@ class MenueController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
+    {     
         $categories=Category::all();
         return view('admin.menue.create',compact('categories'));
     }

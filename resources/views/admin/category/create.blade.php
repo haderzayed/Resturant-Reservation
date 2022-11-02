@@ -12,11 +12,11 @@
           <h1 class="text-center  text-red-700">{{__('Create Category')}}</h1>
         <form action="{{route('admin.categories.store')}}" method="post" enctype="multipart/form-data" >
             @csrf
-            <label for="name" class="block m-3 text-sm font-medium text-gray-900 ">Name</label>
+            <label for="name" class="block m-3 text-sm font-medium text-gray-900 ">Name<span class="inline text-red-500 ">*<span></label>
             <input type="text" name="name" id="name" class=" text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-9/12 p-2.5 " placeholder="name" required>
 
 
-            <label class="block m-3 text-sm font-medium text-gray-900 dark:text-gray-300" for="file_input">Upload file</label>
+            <label class="block m-3 text-sm font-medium text-gray-900 dark:text-gray-300" for="file_input">Upload file<span class="inline text-red-500 ">*<span></label>
             <input name="image" class="block w-9/12 text-sm text-gray-900  rounded-lg border border-gray-300 cursor-pointer  focus:outline-none " aria-describedby="file_input_help" id="file_input" type="file">
             <p class="mt-1 text-sm text-gray-500 " id="file_input_help">SVG, PNG, JPG or GIF (MAX. 800x400px).</p>
 

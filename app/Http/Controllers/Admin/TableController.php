@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Table;
 use App\Http\Requests\TableRequest;
+use App\Enums\TableLocation;
 
 class TableController extends Controller
 {
@@ -14,9 +15,21 @@ class TableController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tables=Table::all();
+        if( $request->has('name') ||
+            $request->has('location')||
+            $request->has('status')||
+            $request->has('guest_number')   ){
+            $tables=Table::where('name','LIKE', "%$request->name%")
+                           ->where ('location','LIKE', "%$request->location%")
+                           ->where ('status','LIKE', "%$request->status%")
+                           ->where ('guest_number','LIKE', "%$request->guest_number%")
+                           ->latest()->paginate(10);
+        }else{
+            $tables=Table::latest()->paginate(10);
+        }
+
         return view('admin.table.index',compact('tables'));
     }
 
@@ -27,6 +40,7 @@ class TableController extends Controller
      */
     public function create()
     {
+
         return view('admin.table.create');
     }
 
@@ -44,7 +58,7 @@ class TableController extends Controller
             'status'=>$request->status,
             'location'=>$request->location,
         ]);
-        
+
         toastr()->success('Table Created Sucessfully');
         return redirect()->route('admin.tables.index');
     }
@@ -91,8 +105,10 @@ class TableController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Table $table)
     {
-        //
+        $table->delete();
+        toastr()->success('Table deleted Sucessfully');
+        return redirect()->route('admin.tables.index');
     }
 }
