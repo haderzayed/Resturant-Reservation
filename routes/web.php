@@ -37,7 +37,7 @@ require __DIR__.'/auth.php';
 
 Route::get('/',[FrontendWelcomeController::class,'index'])->name('index');
 Route::get('categories',[FrontendCategoryController::class,'index'])->name('categories.index');
-Route::get('categories/{category}',[FrontendCategoryController::class,'show'])->name('categories.show');
+Route::get('menues/{menue}',[FrontendMenueController::class,'show'])->name('menues.show');
 Route::get('menues',[FrontendMenueController::class,'index'])->name('menues.index');
 Route::get('reservation/step-one',[FrontendReservationController::class,'stepOne'])->name('reservations.step.one');
 Route::post('reservation/store/step-one',[FrontendReservationController::class,'storeStepOne'])->name('reservations.store.step.one');

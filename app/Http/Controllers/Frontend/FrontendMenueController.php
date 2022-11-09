@@ -14,4 +14,9 @@ class FrontendMenueController extends Controller
 
         return view('front.menues.index',compact('menues'));
     }
+
+    public function show(Menue $menue){
+        $menue->load('categories');
+        return view('front.menues.show',compact('menue'));
+     }
 }

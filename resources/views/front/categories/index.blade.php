@@ -15,17 +15,15 @@
             <div class="grid lg:grid-cols-4 gap-y-6">
                @forelse($categories  as $category )
                 <div class="max-w-xs mx-4 mb-2 rounded-lg shadow-lg">
-                    <a href="{{route('categories.show',$category->id)}}"> <img class="w-full h-48" src="{{Storage::url($category->image)}}"
-                    alt="Image" />
+                    <img class="w-full h-48" src="{{Storage::url($category->image)}}"
+                    alt="Image"/>
                     <div class="px-6 py-4">
-                    <h4 class="mb-3 text-xl font-semibold tracking-tight text-green-600 hover:text-green-400 uppercase"><a href="{{route('categories.show',$category->id)}}">{{$category->name}}</a></h4>
+                    <h4 class="mb-3 text-xl font-semibold tracking-tight text-green-600 hover:text-green-400 uppercase">{{$category->name}}</h4>
                      <p class="leading-normal text-gray-700">  {{ Str::limit($category->description,30)}} </p>
                     </div>
                 </div>
               @endforeach
             </div>
           </div>
-
-
       </section>
 </x-guest-layout>
